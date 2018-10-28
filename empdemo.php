@@ -6,7 +6,7 @@ function processMessage($update) {
             "source" => $update["result"]["source"],
             "speech" => "Hello pavan",
             "displayText" => "Hello pavan",
-            "contextOut" => array()
+            "contextOut" =>"rtrtertert"
         ));
     }
 }
