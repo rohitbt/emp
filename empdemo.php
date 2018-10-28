@@ -4,8 +4,8 @@ function processMessage($update) {
     if($update["result"]["action"] == "sayHello"){
         sendMessage(array(
             "source" => $update["result"]["source"],
-            "speech" => "Hello from webhook",
-            "displayText" => "Hello from webhook",
+            "speech" => "Hello pavan",
+            "displayText" => "Hello pavan",
             "contextOut" => array()
         ));
     }
