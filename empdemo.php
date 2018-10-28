@@ -1,24 +1,40 @@
 <?php
-// Your code here!
-function processMessage($update) {
-    if($update["result"]["action"] == "sayHello"){
-        sendMessage(array(
-            "source" => $update["result"]["source"],
-            "speech" => "Hello pavan",
-            "displayText" => "Hello pavan",
-            "contextOut" =>array()
-        ));
-    }
+$requestBody = file_get_contents('php://input');
+$json = json_decode($requestBody);
+
+$equis = $json->result->parameters->equis;
+
+switch ($equis) {
+    case 'hi':
+        $speech = "Hi, Nice to meet you";
+
+        break;
+
+    case 'bye':
+        $speech = "Bye, good night";
+        break;
+
+    case 'anything':
+        $speech = "Yes, you can type anything here.";
+        break;
+
+    default:
+        $speech = "Sorry, I didnt get that. Please ask me something 
+else.";
+        break;
 }
 
-function sendMessage($parameters) {
-    echo json_encode($parameters);
-}
 
-$update_response = file_get_contents("php://input");
-$update = json_decode($update_response, true);
-if (isset($update["result"]["action"])) {
-    processMessage($update);
+$response = new \stdClass();
+$response->speech = $speech;
+$response->displayText = $speech;
+$response->source = "Alex";
+
+echo json_encode($response);
+}
+else
+{
+echo "Method not allowed";
 }
 
 ?>
