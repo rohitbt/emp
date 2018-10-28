@@ -1,18 +1,24 @@
 <?php
 // Your code here!
-set_time_limit(0);
-$service_url = 'http://dummy.restapiexample.com/api/v1/employees';
-$curl = curl_init($service_url);
-curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-$curl_response = curl_exec($curl);
-if ($curl_response === false) {
-    $info = curl_getinfo($curl);
-    curl_close($curl);
-    die('error occured during curl exec. Additioanl info: ' . var_export($info));
+function processMessage($update) {
+    if($update["result"]["action"] == "sayHello"){
+        sendMessage(array(
+            "source" => $update["result"]["source"],
+            "speech" => "Hello from webhook",
+            "displayText" => "Hello from webhook",
+            "contextOut" => array()
+        ));
+    }
 }
-curl_close($curl);
-$decoded = json_decode($curl_response);
-//var_dump($decoded);
-$count=count($decoded);
+
+function sendMessage($parameters) {
+    echo json_encode($parameters);
+}
+
+$update_response = file_get_contents("php://input");
+$update = json_decode($update_response, true);
+if (isset($update["result"]["action"])) {
+    processMessage($update);
+}
 
 ?>
