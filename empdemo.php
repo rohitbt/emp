@@ -13,6 +13,6 @@ if ($curl_response === false) {
 curl_close($curl);
 $decoded = json_decode($curl_response);
 //var_dump($decoded);
-echo count($decoded);
+$count=count($decoded);
 
 ?>
